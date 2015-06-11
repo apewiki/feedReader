@@ -67,27 +67,22 @@ $(function() {
 
     describe("The menu ", function() {
         it('is hidden by default', function() {
-            console.log($('.menu-hidden .menu').css("transform"));
-            //expect($('.feed-list').offset().left).toBeLessThan(0);
-            //expect($('.menu-hidden .menu').css("transform")).toBeDefined();
+            //class '.menu-hidden .menu' translate menu off visible screen
+            //Check if this class is attached to 'body' to determine if menu is hidden or not
             expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
 
         it('is visible when the menu icon is clicked', function() {
+            //Trigger a click event on menu icon
             $('.menu-icon-link').trigger('click');
-            console.log($('.menu-hidden .menu').css("transform"));
-            console.log($('.feed-list').position());
-            console.log($('body').hasClass('menu-hidden'));
-            //expect($('.feed-list').is(":visible")).toBeTruthy();
-            //expect($('.menu-hidden .menu').css("transform")).toBeUndefined();
+            //Once clicked, menu should appear. Test this behavoir by checking if 'menu-hidden' class is attached to 'body'
             expect($('body').hasClass('menu-hidden')).toBeFalsy();
-            console.log($('.feed-list').offset());
+            //'click' event toggles 'menu-hidden' class. Test by checking 'menu-hidden' is detached after another click
             $('.menu-icon-link').trigger('click');
-            //expect($('.feed-list li').is(":hidden")).toBeTruthy();
-            //expect($('.menu-hidden .menu').css("transform")).toBeDefined();
             expect($('body').hasClass('menu-hidden')).toBeTruthy();
-        })
+        });
     });
+
     /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO: Write a test that ensures when the loadFeed
@@ -99,13 +94,14 @@ $(function() {
 
     describe("Initial Entries", function(){
         beforeEach(function(done) {
+            //Asynchronous loading. Load first feed
             loadFeed(0,function() {
                 done();
             });
         });
 
         it('has at least a single .entry element within the .feed container', function(done) {
-            console.log($('.feed .entry').length);
+            //Check if number of feed entries is greater than 0
             expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
         });
@@ -126,48 +122,27 @@ $(function() {
         var newEntry = '';
         var currentIndex;
 
-        function findIndex(name) {
-            for (var i=0; i<allFeeds.length; i++) {
-                if (allFeeds[i].name === name) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
         beforeEach(function(done) {
+            //Load first feed, assign feed name and first displayed URL to variables
             loadFeed(0, function() {
                 name = $('h1').html();
                 firstEntry = $('.entry-link').first().attr('href');
                 console.log(name + ":" + firstEntry);
-                /*
-                currentIndex = findIndex(name);
-                if (currentIndex === 0) {
-                    currentIndex++;
-                } else {
-                    currentIndex--;
-                }
-                console.log('currentIndex:'+currentIndex);*/
-                loadFeed(1,function() {
-                    newName = $('.header-title').html();
-                    newEntry = $('.entry-link').first().attr('href');
-                    console.log(newName + ":" + newEntry);
-                });
-
                 done();
-            })
+            });
 
         });
 
         it('When a new feed is loaded, the content actually changes', function(done) {
-           // loadFeed(1,function() {
-           //     newName = $('.header-title').html();
-           //     newEntry = $('.entry-link').first().attr('href');
-           //     console.log(newName + ":" + newEntry);
+            /*Load another feed and assign feed name and first displayed URL to another set of variables
+            Now check if the names and first URLs are different from the first load or not*/
+             loadFeed(3, function() {
+                newName = $('h1').html();
+                newEntry = $('.entry-link').first().attr('href');
                 expect(name).not.toBe(newName);
                 expect(firstEntry).not.toBe(newEntry);
                 done();
-            //});
+            });
         });
     });
 }());
