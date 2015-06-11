@@ -69,19 +69,23 @@ $(function() {
         it('is hidden by default', function() {
             console.log($('.menu-hidden .menu').css("transform"));
             //expect($('.feed-list').offset().left).toBeLessThan(0);
-            expect($('.menu-hidden .menu').css("transform")).toBeDefined();
+            //expect($('.menu-hidden .menu').css("transform")).toBeDefined();
+            expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
 
         it('is visible when the menu icon is clicked', function() {
             $('.menu-icon-link').trigger('click');
             console.log($('.menu-hidden .menu').css("transform"));
             console.log($('.feed-list').position());
+            console.log($('body').hasClass('menu-hidden'));
             //expect($('.feed-list').is(":visible")).toBeTruthy();
-            expect($('.menu-hidden .menu').css("transform")).toBeUndefined();
+            //expect($('.menu-hidden .menu').css("transform")).toBeUndefined();
+            expect($('body').hasClass('menu-hidden')).toBeFalsy();
             console.log($('.feed-list').offset());
             $('.menu-icon-link').trigger('click');
             //expect($('.feed-list li').is(":hidden")).toBeTruthy();
-            expect($('.menu-hidden .menu').css("transform")).toBeDefined();
+            //expect($('.menu-hidden .menu').css("transform")).toBeDefined();
+            expect($('body').hasClass('menu-hidden')).toBeTruthy();
         })
     });
     /* TODO: Write a new test suite named "Initial Entries" */
@@ -100,7 +104,7 @@ $(function() {
             });
         });
 
-        it(' has at least a single .entry element within the .feed container', function(done) {
+        it('has at least a single .entry element within the .feed container', function(done) {
             console.log($('.feed .entry').length);
             expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
@@ -122,41 +126,48 @@ $(function() {
         var newEntry = '';
         var currentIndex;
 
-         function findIndex(name) {
-                for (var i=0; i<allFeeds.length; i++) {
-                    if (allFeeds[i].name === name) {
-                        return i;
-                    }
+        function findIndex(name) {
+            for (var i=0; i<allFeeds.length; i++) {
+                if (allFeeds[i].name === name) {
+                    return i;
                 }
-                return -1;
             }
+            return -1;
+        }
 
         beforeEach(function(done) {
             loadFeed(0, function() {
                 name = $('h1').html();
                 firstEntry = $('.entry-link').first().attr('href');
                 console.log(name + ":" + firstEntry);
+                /*
                 currentIndex = findIndex(name);
                 if (currentIndex === 0) {
                     currentIndex++;
                 } else {
                     currentIndex--;
                 }
-                console.log('currentIndex:'+currentIndex);
+                console.log('currentIndex:'+currentIndex);*/
+                loadFeed(1,function() {
+                    newName = $('.header-title').html();
+                    newEntry = $('.entry-link').first().attr('href');
+                    console.log(newName + ":" + newEntry);
+                });
+
                 done();
             })
 
         });
 
         it('When a new feed is loaded, the content actually changes', function(done) {
-            loadFeed(currentIndex,function() {
-                newName = $('.header-title').html();
-                newEntry = $('.entry-link').first().attr('href');
-                console.log(newName + ":" + newEntry);
+           // loadFeed(1,function() {
+           //     newName = $('.header-title').html();
+           //     newEntry = $('.entry-link').first().attr('href');
+           //     console.log(newName + ":" + newEntry);
                 expect(name).not.toBe(newName);
                 expect(firstEntry).not.toBe(newEntry);
                 done();
-            });
+            //});
         });
     });
 }());
