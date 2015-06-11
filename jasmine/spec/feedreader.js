@@ -21,7 +21,7 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
+        it('Feeds are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -65,7 +65,7 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
-    describe("The menu ", function() {
+    describe('The menu ', function() {
         it('is hidden by default', function() {
             //class '.menu-hidden .menu' translate menu off visible screen
             //Check if this class is attached to 'body' to determine if menu is hidden or not
@@ -92,7 +92,7 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-    describe("Initial Entries", function(){
+    describe('Initial Entries', function(){
         beforeEach(function(done) {
             //Asynchronous loading. Load first feed
             loadFeed(0,function() {
@@ -127,7 +127,6 @@ $(function() {
             loadFeed(0, function() {
                 name = $('h1').html();
                 firstEntry = $('.entry-link').first().attr('href');
-                console.log(name + ":" + firstEntry);
                 done();
             });
 
