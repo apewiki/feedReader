@@ -26,95 +26,71 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
+        /* This test ensures every feed has a URL defined
+         * and the URL is not empty
          */
-         it('Each feed has a URL', function() {
+        it('Each feed has a URL', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
                 expect(feed.url.length).not.toBe(0);
-             });
-         });
+            });
+        });
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
+        /* This test loops through each feed
+         * and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('Each feed has a valid name', function() {
+        it('Each feed has a valid name', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0);
-             });
-         });
+            });
+        });
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
-
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
-
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
-
+    // Test suite "The menu"
     describe('The menu ', function() {
+        // This test ensures the menu element is hidden by default.
         it('is hidden by default', function() {
-            //class '.menu-hidden .menu' translate menu off visible screen
-            //Check if this class is attached to 'body' to determine if menu is hidden or not
+            /* class '.menu-hidden .menu' translate menu off visible screen
+             * Check if this class is attached to 'body' to determine if menu is hidden or not. */
             expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
 
+        // This test ensures the menu changes visibility when the menu icon is clicked.
         it('is visible when the menu icon is clicked', function() {
-            //Trigger a click event on menu icon
+            // Trigger a click event on menu icon.
             $('.menu-icon-link').trigger('click');
-            //Once clicked, menu should appear. Test this behavoir by checking if 'menu-hidden' class is attached to 'body'
+            // Once clicked, menu should appear. Test this behavoir by checking if 'menu-hidden' class is attached to 'body'.
             expect($('body').hasClass('menu-hidden')).toBeFalsy();
-            //'click' event toggles 'menu-hidden' class. Test by checking 'menu-hidden' is detached after another click
+            // 'click' event toggles 'menu-hidden' class. Test by checking 'menu-hidden' is detached after another click.
             $('.menu-icon-link').trigger('click');
             expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
     });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
-
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
-
+    // Test suite "Initial Entries". This test ensures every feed has at least one entry
     describe('Initial Entries', function(){
+        // loadFeed() is a synchronous. Use Jasmine asynchronous done() function.
         beforeEach(function(done) {
-            //Asynchronous loading. Load first feed
-            loadFeed(0,function() {
+            // Asynchronous loading. Load first feed
+            loadFeed(0, function() {
                 done();
             });
         });
 
         it('has at least a single .entry element within the .feed container', function(done) {
-            //Check if number of feed entries is greater than 0
+            // Check if number of feed entries is greater than 0
             expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
         });
 
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-
+    /* Test suite "New Feed Selection. This test ensures when a new feed is load
+     * by the loadFeed function, the content actually changes.
+     */
     describe('New Feed Selection', function() {
         var name = '';
         var newName = '';
@@ -123,7 +99,7 @@ $(function() {
         var currentIndex;
 
         beforeEach(function(done) {
-            //Load first feed, assign feed name and first displayed URL to variables
+            // Load first feed, assign feed name and first displayed URL to variables
             loadFeed(0, function() {
                 name = $('h1').html();
                 firstEntry = $('.entry-link').first().attr('href');
@@ -133,7 +109,7 @@ $(function() {
         });
 
         it('When a new feed is loaded, the content actually changes', function(done) {
-            /*Load another feed and assign feed name and first displayed URL to another set of variables
+            /*Load another feed. Assign feed name and the first displayed URL to another set of variables
             Now check if the names and first URLs are different from the first load or not*/
              loadFeed(3, function() {
                 newName = $('h1').html();

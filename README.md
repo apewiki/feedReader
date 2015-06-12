@@ -1,5 +1,9 @@
 # Testing Feed Reader Project
 
+To run the test:
+Open index.html file to start feed reader testing. When all tests pass, the "Jasmine" section should show "7 sepcs, 0 fails". If certain test fails, red messages will show up with details of the failed test.
+
+Testing specs:
 1. Test suite "RSS Feed" contains 3 tests. First tests if feeds are defined. The 2nd and 3rd loops through each feed in the allFeeds object and ensures it has a URL defined and that the URL is not empty.
 2. Test suite "The menu" contains 2 tests. The first tests if feed list menu is hidden by default. The second tests if menu icon is clicked,
 the feed menu list shows up. It goes away when menu icon is clicked on more time. Tests use jQuery to trigger click events and check if 'menu-hidden' class is attached to 'body' element.
